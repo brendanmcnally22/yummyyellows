@@ -38,10 +38,14 @@ namespace MohawkGame2D
         private float slowMotionTimer = 0;
         private Texture2D playerTexture;
         private Texture2D aiTexture;
+        private enum GameState { MainMenu, Playing }
+        private GameState currentState = GameState.MainMenu;
 
         Music[] music = new Music[1];
         public void Setup()
+            
         {
+            Graphics.LoadTexture("C:\\Users\\brend\\Downloads\\YummyMenu.png");
             music[0] = Audio.LoadMusic("C:\\Users\\brend\\Downloads\\CantTouchThis.mp3");
             Window.SetSize(400, 400);
             Window.SetTitle("YUMMY YELLOWS");
@@ -51,15 +55,24 @@ namespace MohawkGame2D
 
         public void Update()
         {
-            UpdateFollower();
+            Window.ClearBackground(Color.OffWhite);
+
+            if (currentState == GameState.MainMenu)
             {
-                Window.ClearBackground(Color.OffWhite);
+                drawMainMenu();
+                HandleMenuInput();
+            }
+            else if (currentState == GameState.Playing)
+            {
+               
                 HandleInput();
+                UpdateFollower();
                 UpdateCollectibles();
                 CheckCollisions();
                 UpdateTimers();
                 DrawPlayer();
                 DrawCollectibles();
+                DrawFollower();
             }
         }
         void SpawnCollectibles()
@@ -228,6 +241,28 @@ namespace MohawkGame2D
         {
             Draw.FillColor = Color.Black;
             Text.Draw("Score: " + playerScore, 10, 10);
+        }
+        void drawMainMenu()
+        {
+
+            Texture2D backgroundTexture = Graphics.LoadTexture("C:\\Users\\brend\\OneDrive\\Documents\\YummyMenu.png");
+            if (backgroundTexture.Width == 0 || backgroundTexture.Height == 0)
+            {
+                Console.WriteLine("Failed to load texture.");
+            }
+            else
+            {
+                Graphics.Draw(backgroundTexture, 0, 0);
+            }
+
+        }
+        void HandleMenuInput()
+        {
+
+            if (Input.IsControllerButtonPressed(0, ControllerButton.MiddleLeft))
+            {
+                currentState = GameState.Playing;
+            }
         }
 
     }
