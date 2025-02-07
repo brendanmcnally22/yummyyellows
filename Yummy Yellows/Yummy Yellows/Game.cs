@@ -38,7 +38,7 @@ namespace MohawkGame2D
         private float slowMotionTimer = 0;
         private Texture2D playerTexture;
         private Texture2D aiTexture;
-        private enum GameState { MainMenu, Playing }
+        private enum GameState { MainMenu,PauseMenu, Playing }
         private GameState currentState = GameState.MainMenu;
 
         Music[] music = new Music[1];
@@ -259,10 +259,15 @@ namespace MohawkGame2D
         void HandleMenuInput()
         {
 
-            if (Input.IsControllerButtonPressed(0, ControllerButton.MiddleLeft))
+            if (Input.IsControllerButtonPressed(0, ControllerButton.RightFaceLeft))
             {
                 currentState = GameState.Playing;
             }
+        }
+        void drawPauseMenu()
+        {
+            Texture2D pausemenuTexture = Graphics.LoadTexture("C:\\Users\\brend\\OneDrive\\Documents\\YummyMenu.png");
+
         }
 
     }
