@@ -62,6 +62,11 @@ namespace MohawkGame2D
                 drawMainMenu();
                 HandleMenuInput();
             }
+            else if (currentState == GameState.PauseMenu)
+                {
+                drawPauseMenu();
+                HandleMenuInput();  
+            }
             else if (currentState == GameState.Playing)
             {
                
@@ -134,6 +139,13 @@ namespace MohawkGame2D
                 {
                     (showScoreboard) = true;
                     DrawScoreboard();
+                }
+                if (Input.IsControllerButtonPressed(0, ControllerButton.RightFaceLeft))
+                    {
+
+                    currentState = GameState.PauseMenu;
+                    drawPauseMenu();
+                    handlePauseInput();
                 }
 
             }
@@ -266,8 +278,18 @@ namespace MohawkGame2D
         }
         void drawPauseMenu()
         {
-            Texture2D pausemenuTexture = Graphics.LoadTexture("C:\\Users\\brend\\OneDrive\\Documents\\YummyMenu.png");
+            currentState = GameState.PauseMenu;
+            Texture2D pausemenuTexture = Graphics.LoadTexture("C:\\Users\\brend\\OneDrive\\Documents\\YummyPause.png");
+            Graphics.Draw(pausemenuTexture, 0, 0);
 
+        }
+        
+        void handlePauseInput()
+        {
+            if (Input.IsControllerButtonPressed(0, ControllerButton.RightFaceLeft))
+            {
+                currentState = GameState.Playing;
+            }
         }
 
     }
